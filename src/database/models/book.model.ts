@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 const BookSchema = new Schema(
   {
@@ -20,6 +20,4 @@ const BookSchema = new Schema(
   }
 );
 
-const Book = model('book', BookSchema);
-
-export default Book;
+export const Book = model('book', BookSchema);

@@ -1,5 +1,1 @@
-import Book from './book.model';
-
-export default {
-  Book,
-};
+export * from './book.model';
