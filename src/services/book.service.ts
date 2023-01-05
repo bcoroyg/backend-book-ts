@@ -2,7 +2,7 @@ import { UploadedFile } from 'express-fileupload';
 import createHttpError from 'http-errors';
 import config from '../config';
 import { Book } from '../database/models';
-import { deleteFile, uploadHandler } from '../utils';
+import { deleteFile, deleteImageCloudinary, uploadHandler, uploadImageCloudinary } from '../utils';
 
 export class BookService {
   private static _bookServiceInstance: BookService;
@@ -19,16 +19,17 @@ export class BookService {
   //lista de libros
   async getBooks() {
     let books = await Book.find({});
-    books = books.map((book) => {
-      book.image = `${config.publicUrl}/images/${book.image}`;
-      return book;
-    });
+    // books = books.map((book) => {
+    //   book.image = `${config.publicUrl}/images/${book.image}`;
+    //   return book;
+    // });
     return books;
   }
 
   //crear libro
   async createBook(book: any, file: UploadedFile) {
-    const nameFile = await uploadHandler(file);
+    //const nameFile = await uploadHandler(file);
+    const nameFile = await uploadImageCloudinary(file);
     const createdBook = await Book.create({
       ...book,
       image: nameFile,
@@ -51,9 +52,11 @@ export class BookService {
     if (file) {
       const bookDB = await this.getBookById(bookId);
       if (bookDB.image) {
-        deleteFile(bookDB.image);
+        //deleteFile(bookDB.image);
+        deleteImageCloudinary(bookDB.image);
       }
-      const nameFile = await uploadHandler(file);
+      //const nameFile = await uploadHandler(file);
+      const nameFile = await uploadImageCloudinary(file);
       book = {
         ...book,
         image: nameFile,
@@ -73,7 +76,8 @@ export class BookService {
     const bookDB = await this.getBookById(bookId);
     const deletedBook = await bookDB.delete();
     if (deletedBook.image) {
-      deleteFile(deletedBook.image);
+      //deleteFile(deletedBook.image);
+      deleteImageCloudinary(deletedBook.image);
     }
     return deletedBook._id;
   }
