@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import config from '../config';
 import { dbConnection } from '../lib';
+import { errorHandler, logErrors, notFoundHandler } from '../utils/middlewares';
 
 export class Server {
   private app: Application;
@@ -18,6 +19,7 @@ export class Server {
     //routes
 
     //errors
+    this.errors();
 
     //listen
     this.listen();
@@ -29,6 +31,14 @@ export class Server {
 
   middlewares() {
     this.app.use(express.json());
+  }
+
+  errors() {
+    //Error 404
+    this.app.use(notFoundHandler);
+    // Middlewares errors
+    this.app.use(logErrors);
+    this.app.use(errorHandler);
   }
 
   listen() {
