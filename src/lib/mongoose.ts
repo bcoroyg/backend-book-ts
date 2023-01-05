@@ -1,3 +1,4 @@
+import Debug from 'debug';
 import mongoose from 'mongoose';
 import config from '../config';
 
@@ -12,7 +13,9 @@ export const dbConnection = async (): Promise<void> => {
   try {
     mongoose.set('strictQuery', true);
     await mongoose.connect(MONGO_URI);
-    console.log('Connect success DB');
+    const debug = Debug("app:server")
+    debug('Connect success DB')
+    //console.log('Connect success DB');
   } catch (error) {
     throw new Error('Error connect DB');
   }

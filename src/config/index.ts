@@ -12,6 +12,8 @@ const config = {
   dbName: process.env.DB_NAME,
   dbPort: process.env.DB_PORT,
   publicUrl: process.env.PUBLIC_URL,
+  defaultAdminUsername: process.env.DEFAULT_ADMIN_USERNAME,
+  defaultAdminPassword: process.env.DEFAULT_ADMIN_PASSWORD,
 };
 
 export default config;

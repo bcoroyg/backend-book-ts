@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import SwaggerUI from 'swagger-ui-express';
+import Debug from 'debug';
 import config from '../config';
 import { openApiConfiguration } from '../documentation';
 import { dbConnection } from '../lib';
@@ -64,7 +65,9 @@ export class Server {
 
   listen() {
     this._app.listen(this.port, () => {
-      console.log(`Server running`);
+      const debug = Debug("app:server")
+      //console.log(`Server running`);
+      debug(`Server running`);
     });
   }
 
