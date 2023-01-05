@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import config from '../config';
 import { dbConnection } from '../lib';
+import routerAPI from '../routes';
 import { errorHandler, logErrors, notFoundHandler } from '../utils/middlewares';
 
 export class Server {
@@ -16,7 +17,9 @@ export class Server {
 
     //middlewares
     this.middlewares();
+
     //routes
+    this.routes();
 
     //errors
     this.errors();
@@ -27,6 +30,10 @@ export class Server {
 
   async dbConnect() {
     await dbConnection();
+  }
+
+  routes() {
+    routerAPI(this.app);
   }
 
   middlewares() {

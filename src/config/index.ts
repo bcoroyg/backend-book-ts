@@ -11,6 +11,7 @@ const config = {
   dbHost: process.env.DB_HOST,
   dbName: process.env.DB_NAME,
   dbPort: process.env.DB_PORT,
+  publicUrl: process.env.PUBLIC_URL,
 };
 
 export default config;
