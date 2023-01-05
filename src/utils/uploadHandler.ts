@@ -1,5 +1,5 @@
 import { UploadedFile } from 'express-fileupload';
-import { existsSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync, unlinkSync } from 'fs';
 import createHttpError from 'http-errors';
 import { join } from 'path';
 
@@ -26,4 +26,11 @@ export const uploadHandler = (file: UploadedFile) => {
       resolve(nameFileTemp);
     });
   });
+};
+
+export const deleteFile = (nameFile: string) => {
+  const pathUrl = join(__dirname, '../assets/images/books', nameFile);
+  if (existsSync(pathUrl)) {
+    unlinkSync(pathUrl);
+  }
 };

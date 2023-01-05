@@ -2,7 +2,7 @@ import { UploadedFile } from 'express-fileupload';
 import createHttpError from 'http-errors';
 import config from '../config';
 import { Book } from '../database/models';
-import { uploadHandler } from '../utils';
+import { deleteFile, uploadHandler } from '../utils';
 
 export class BookService {
   private static _bookServiceInstance: BookService;
@@ -42,12 +42,23 @@ export class BookService {
     if (!book) {
       throw createHttpError(404, 'Book not found!');
     }
-    book.image = `${config.publicUrl}/images/${book.image}`;
+    //book.image = `${config.publicUrl}/images/${book.image}`;
     return book;
   }
 
   //actualizar libro por ID
   async updateBook(bookId: string, book: any, file: UploadedFile) {
+    if (file) {
+      const bookDB = await this.getBookById(bookId);
+      if (bookDB.image) {
+        deleteFile(bookDB.image);
+      }
+      const nameFile = await uploadHandler(file);
+      book = {
+        ...book,
+        image: nameFile,
+      };
+    }
     const updatedBook = await Book.findByIdAndUpdate(bookId, book, {
       new: true,
     });
@@ -61,6 +72,9 @@ export class BookService {
   async deleteBook(bookId: string) {
     const bookDB = await this.getBookById(bookId);
     const deletedBook = await bookDB.delete();
-    return deletedBook;
+    if (deletedBook.image) {
+      deleteFile(deletedBook.image);
+    }
+    return deletedBook._id;
   }
 }
