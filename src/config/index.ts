@@ -16,6 +16,9 @@ const config = {
   defaultAdminPassword: process.env.DEFAULT_ADMIN_PASSWORD,
   jwtSecret: process.env.JWT_SECRET,
   jwtTimeExpire: process.env.JWT_TIME_EXPIRE,
+  cloudApiSecret: process.env.CLOUD_API_SECRET,
+  cloudApiKey: process.env.CLOUD_API_KEY,
+  cloudName: process.env.CLOUD_NAME
 };
 
 export default config;
