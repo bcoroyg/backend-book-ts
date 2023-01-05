@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import SwaggerUI from 'swagger-ui-express';
 import Debug from 'debug';
+import fileUpload from 'express-fileupload';
 import config from '../config';
 import { openApiConfiguration } from '../documentation';
 import { dbConnection } from '../lib';
@@ -53,6 +54,14 @@ export class Server {
 
   middlewares() {
     this._app.use(express.json());
+    // Fileupload - Carga de archivos
+    this.app.use(
+      fileUpload({
+        useTempFiles: true,
+        tempFileDir: '/tmp/',
+        createParentPath: true,
+      })
+    );
   }
 
   errors() {
@@ -65,7 +74,7 @@ export class Server {
 
   listen() {
     this._app.listen(this.port, () => {
-      const debug = Debug("app:server")
+      const debug = Debug('app:server');
       //console.log(`Server running`);
       debug(`Server running`);
     });
