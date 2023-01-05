@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { UploadedFile } from 'express-fileupload';
 import passport from 'passport';
 import { BookService } from '../services';
+import { bookIdValidator, createBookValidator, updateBookValidator } from '../utils/validators';
 
 const router = Router();
 const _bookService = BookService.getInstance();
@@ -24,6 +25,7 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
+  createBookValidator,
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { body: book } = req;
@@ -43,6 +45,7 @@ router.post(
 
 router.get(
   '/:bookId',
+  bookIdValidator,
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { bookId } = req.params;
@@ -60,6 +63,7 @@ router.get(
 router.put(
   '/:bookId',
   passport.authenticate('jwt', { session: false }),
+  updateBookValidator,
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { bookId } = req.params;
@@ -82,6 +86,7 @@ router.put(
 router.delete(
   '/:bookId',
   passport.authenticate('jwt', { session: false }),
+  bookIdValidator,
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { bookId } = req.params;
