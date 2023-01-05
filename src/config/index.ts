@@ -14,6 +14,8 @@ const config = {
   publicUrl: process.env.PUBLIC_URL,
   defaultAdminUsername: process.env.DEFAULT_ADMIN_USERNAME,
   defaultAdminPassword: process.env.DEFAULT_ADMIN_PASSWORD,
+  jwtSecret: process.env.JWT_SECRET,
+  jwtTimeExpire: process.env.JWT_TIME_EXPIRE,
 };
 
 export default config;
