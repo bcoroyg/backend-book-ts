@@ -15,6 +15,12 @@ const swaggerDefinition: OAS3Definition = {
     },
   ],
   components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+      },
+    },
     schemas: {
       book: {
         type: 'object',
@@ -34,13 +40,13 @@ const swaggerDefinition: OAS3Definition = {
         type: 'object',
         required: ['username', 'password'],
         properties: {
-          username: { type:'string' },
-          password: { type:'string' },
+          username: { type: 'string' },
+          password: { type: 'string' },
         },
         example: {
           username: 'admin',
           password: 'admin',
-        }
+        },
       },
     },
   },
@@ -54,17 +60,17 @@ const swaggerDefinition: OAS3Definition = {
       example: {
         statusCode: 404,
         msg: 'Book not found!',
-      }
+      },
     },
     user: {
       type: 'object',
       properties: {
-        username: { type:'string' },
+        username: { type: 'string' },
       },
       example: {
         username: 'admin',
-      }
-    }
+      },
+    },
   },
   tags: [
     {
@@ -73,12 +79,12 @@ const swaggerDefinition: OAS3Definition = {
     },
     {
       name: 'Search',
-      description:'search endpoint',
+      description: 'search endpoint',
     },
     {
       name: 'Auth',
       description: 'auth endpoint',
-    }
+    },
   ],
   paths: {
     '/books': {
@@ -115,6 +121,11 @@ const swaggerDefinition: OAS3Definition = {
         tags: ['Books'],
         summary: 'create a book',
         description: 'create a book',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           201: {
             description: 'Book created',
@@ -199,6 +210,11 @@ const swaggerDefinition: OAS3Definition = {
         tags: ['Books'],
         summary: 'update a book',
         description: 'update a book',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: 'bookId',
@@ -255,6 +271,11 @@ const swaggerDefinition: OAS3Definition = {
         tags: ['Books'],
         summary: 'delete a book',
         description: 'delete a book',
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: 'bookId',
@@ -303,7 +324,7 @@ const swaggerDefinition: OAS3Definition = {
       get: {
         tags: ['Search'],
         summary: 'search books',
-        description:'search books',
+        description: 'search books',
         parameters: [
           {
             name: 'title',
@@ -311,9 +332,9 @@ const swaggerDefinition: OAS3Definition = {
             description: 'book title',
             required: true,
             schema: {
-              type:'string',
+              type: 'string',
             },
-          }
+          },
         ],
         responses: {
           200: {
@@ -327,21 +348,21 @@ const swaggerDefinition: OAS3Definition = {
                       type: 'array',
                       items: {
                         $ref: '#/components/schemas/book',
-                      }
+                      },
                     },
                     msg: {
-                      type:'string',
+                      type: 'string',
                       example: 'books found!',
                     },
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
-    "/auth/login": {
+    '/auth/login': {
       post: {
         tags: ['Auth'],
         summary: 'login user',
@@ -382,14 +403,14 @@ const swaggerDefinition: OAS3Definition = {
                       type: 'string',
                       example: 'Incorrect email and/or password.',
                     },
-                  }
+                  },
                 },
               },
             },
           },
         },
       },
-    }
+    },
   },
 };
 
