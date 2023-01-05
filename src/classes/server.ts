@@ -1,5 +1,6 @@
-import express, { Application } from "express";
-import config from "../config";
+import express, { Application } from 'express';
+import config from '../config';
+import { dbConnection } from '../lib';
 
 export class Server {
   private app: Application;
@@ -10,6 +11,7 @@ export class Server {
     this.port = Number(config.port);
 
     //database
+    this.dbConnect();
 
     //middlewares
     this.middlewares();
@@ -21,6 +23,10 @@ export class Server {
     this.listen();
   }
 
+  async dbConnect() {
+    await dbConnection();
+  }
+
   middlewares() {
     this.app.use(express.json());
   }
@@ -28,6 +34,6 @@ export class Server {
   listen() {
     this.app.listen(this.port, () => {
       console.log(`Server running`);
-    })
+    });
   }
 }
