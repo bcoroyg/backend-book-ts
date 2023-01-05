@@ -1,4 +1,5 @@
 import express, { Application } from "express";
+import config from "../config";
 
 export class Server {
   private app: Application;
@@ -6,7 +7,7 @@ export class Server {
 
   constructor() {
     this.app = express();
-    this.port = 3000;
+    this.port = Number(config.port);
 
     //database
 
