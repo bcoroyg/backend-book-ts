@@ -1,5 +1,7 @@
 import express, { Application } from 'express';
+import SwaggerUI from 'swagger-ui-express';
 import config from '../config';
+import { openApiConfiguration } from '../documentation';
 import { dbConnection } from '../lib';
 import routerAPI from '../routes';
 import { errorHandler, logErrors, notFoundHandler } from '../utils/middlewares';
@@ -35,6 +37,17 @@ export class Server {
 
   routes() {
     routerAPI(this._app);
+    /**
+     * Definir ruta de documentación
+     */
+    // activar en desarrollo
+    config.dev
+      ? this.app.use(
+          '/docs',
+          SwaggerUI.serve,
+          SwaggerUI.setup(openApiConfiguration)
+        )
+      : null;
   }
 
   middlewares() {

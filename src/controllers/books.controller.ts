@@ -11,7 +11,7 @@ router.get(
       const books = await _bookService.getBooks();
       res.status(200).json({
         data: books,
-        message: 'books listed!',
+        msg: 'books listed!',
       });
     } catch (error) {
       next(error);
@@ -27,7 +27,7 @@ router.post(
       const createdBook = await _bookService.createBook(book);
       res.status(201).json({
         data: createdBook,
-        message: 'books created!',
+        msg: 'books created!',
       });
     } catch (error) {
       next(error);
@@ -43,7 +43,7 @@ router.get(
       const book = await _bookService.getBookById(bookId);
       res.status(200).json({
         data: book,
-        message: 'book retrieved!',
+        msg: 'book retrieved!',
       });
     } catch (error) {
       next(error);
@@ -60,7 +60,7 @@ router.put(
       const updatedBook = await _bookService.updateBook(bookId, book);
       res.status(200).json({
         data: updatedBook,
-        message: 'book updated!',
+        msg: 'book updated!',
       });
     } catch (error) {
       next(error);
@@ -76,7 +76,7 @@ router.delete(
       const book = await _bookService.deleteBook(bookId);
       res.status(200).json({
         data: book,
-        message: 'book deleted!',
+        msg: 'book deleted!',
       });
     } catch (error) {
       next(error);
