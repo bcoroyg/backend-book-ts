@@ -8,7 +8,7 @@ const router = Router();
 router.post(
   '/login',
   passport.authenticate('local', { session: false }),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { user } = req;
     try {
       const token = await signTokenHandler(<IUser>user);

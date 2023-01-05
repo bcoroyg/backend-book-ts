@@ -4,7 +4,7 @@ import { SearchService } from '../services';
 const router = Router();
 const _searchService = SearchService.getInstance();
 
-router.get('/:title', async (req, res, next) => {
+router.get('/:title', async (req, res, next): Promise<void> => {
   try {
     const { title } = req.params;
     const books = await _searchService.getSearch(title);

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import passport from 'passport';
 import { BookService } from '../services';
 
 const router = Router();
@@ -21,6 +22,7 @@ router.get(
 
 router.post(
   '/',
+  passport.authenticate('jwt', { session: false }),
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { body: book } = req;
@@ -53,6 +55,7 @@ router.get(
 
 router.put(
   '/:bookId',
+  passport.authenticate('jwt', { session: false }),
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { bookId } = req.params;
@@ -70,6 +73,7 @@ router.put(
 
 router.delete(
   '/:bookId',
+  passport.authenticate('jwt', { session: false }),
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { bookId } = req.params;
