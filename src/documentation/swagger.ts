@@ -50,6 +50,10 @@ const swaggerDefinition: OAS3Definition = {
       name: 'Books',
       description: 'books endpoint',
     },
+    {
+      name: 'Search',
+      description:'search endpoint',
+    }
   ],
   paths: {
     '/books': {
@@ -270,6 +274,48 @@ const swaggerDefinition: OAS3Definition = {
         },
       },
     },
+    '/search/{title}': {
+      get: {
+        tags: ['Search'],
+        summary: 'search books',
+        description:'search books',
+        parameters: [
+          {
+            name: 'title',
+            in: 'path',
+            description: 'book title',
+            required: true,
+            schema: {
+              type:'string',
+            },
+          }
+        ],
+        responses: {
+          200: {
+            description: 'Books found',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    data: {
+                      type: 'array',
+                      items: {
+                        $ref: '#/components/schemas/book',
+                      }
+                    },
+                    msg: {
+                      type:'string',
+                      example: 'books found!',
+                    },
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   },
 };
 

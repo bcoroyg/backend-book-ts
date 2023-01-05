@@ -10,7 +10,7 @@ router.get('/:title', async (req, res, next) => {
     const books = await _searchService.getSearch(title);
     res.status(200).json({
       data: books,
-      message: 'books retrieved!',
+      msg: 'books found!',
     });
   } catch (error) {
     next(error);
