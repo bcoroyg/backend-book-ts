@@ -11,14 +11,14 @@ export const LocalStrategy = new Strategy(
     usernameField: 'username',
     passwordField: 'password',
   },
-  async (email, password, done) => {
+  async (username, password, done) => {
     try {
-      const user = await _userService.getUserByEmail(email);
+      const user = await _userService.getUserByUsername(username);
 
       //Verifica si el usuario existe
       if (!user) {
         return done(
-          createHttpError(400, 'Incorrect email and/or password.'),
+          createHttpError(400, 'Incorrect username and/or password.'),
           false
         );
       }
@@ -26,7 +26,7 @@ export const LocalStrategy = new Strategy(
       //Verifica si el password es correcto
       if (!(await compare(password, user.password))) {
         return done(
-          createHttpError(400, 'Incorrect email and/or password.'),
+          createHttpError(400, 'Incorrect username and/or password.'),
           false
         );
       }

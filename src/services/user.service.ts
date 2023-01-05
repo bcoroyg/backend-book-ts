@@ -18,8 +18,8 @@ export class UserService {
     return user;
   }
 
-  async getUserByEmail(email: string) {
-    const user = await User.findOne({ email });
+  async getUserByUsername(username: string) {
+    const user = await User.findOne({ username });
     return user;
   }
 }
