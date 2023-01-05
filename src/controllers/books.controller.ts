@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import { UploadedFile } from 'express-fileupload';
 import passport from 'passport';
 import { BookService } from '../services';
 
@@ -26,7 +27,10 @@ router.post(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { body: book } = req;
-      const createdBook = await _bookService.createBook(book);
+      const createdBook = await _bookService.createBook(
+        book,
+        <UploadedFile>req.files?.file
+      );
       res.status(201).json({
         data: createdBook,
         msg: 'books created!',
@@ -60,7 +64,11 @@ router.put(
     try {
       const { bookId } = req.params;
       const { body: book } = req;
-      const updatedBook = await _bookService.updateBook(bookId, book);
+      const updatedBook = await _bookService.updateBook(
+        bookId,
+        book,
+        <UploadedFile>req.files?.file
+      );
       res.status(200).json({
         data: updatedBook,
         msg: 'book updated!',

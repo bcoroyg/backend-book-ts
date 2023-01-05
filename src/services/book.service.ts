@@ -1,6 +1,8 @@
+import { UploadedFile } from 'express-fileupload';
 import createHttpError from 'http-errors';
 import config from '../config';
 import { Book } from '../database/models';
+import { uploadHandler } from '../utils';
 
 export class BookService {
   private static _bookServiceInstance: BookService;
@@ -25,8 +27,12 @@ export class BookService {
   }
 
   //crear libro
-  async createBook(book: any) {
-    const createdBook = await Book.create(book);
+  async createBook(book: any, file: UploadedFile) {
+    const nameFile = await uploadHandler(file);
+    const createdBook = await Book.create({
+      ...book,
+      image: nameFile,
+    });
     return createdBook;
   }
 
@@ -41,7 +47,7 @@ export class BookService {
   }
 
   //actualizar libro por ID
-  async updateBook(bookId: string, book: any) {
+  async updateBook(bookId: string, book: any, file: UploadedFile) {
     const updatedBook = await Book.findByIdAndUpdate(bookId, book, {
       new: true,
     });
