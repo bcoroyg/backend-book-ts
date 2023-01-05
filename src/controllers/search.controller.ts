@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { SearchService } from '../services/search.service';
+import { SearchService } from '../services';
 
 const router = Router();
 const _searchService = SearchService.getInstance();

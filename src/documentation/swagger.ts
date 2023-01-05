@@ -30,6 +30,18 @@ const swaggerDefinition: OAS3Definition = {
           image: 'http://localhost:4000/images/book.jpg',
         },
       },
+      login: {
+        type: 'object',
+        required: ['username', 'password'],
+        properties: {
+          username: { type:'string' },
+          password: { type:'string' },
+        },
+        example: {
+          username: 'admin',
+          password: 'admin',
+        }
+      },
     },
   },
   properties: {
@@ -44,6 +56,15 @@ const swaggerDefinition: OAS3Definition = {
         msg: 'Book not found!',
       }
     },
+    user: {
+      type: 'object',
+      properties: {
+        username: { type:'string' },
+      },
+      example: {
+        username: 'admin',
+      }
+    }
   },
   tags: [
     {
@@ -53,6 +74,10 @@ const swaggerDefinition: OAS3Definition = {
     {
       name: 'Search',
       description:'search endpoint',
+    },
+    {
+      name: 'Auth',
+      description: 'auth endpoint',
     }
   ],
   paths: {
@@ -315,6 +340,55 @@ const swaggerDefinition: OAS3Definition = {
           }
         }
       }
+    },
+    "/auth/login": {
+      post: {
+        tags: ['Auth'],
+        summary: 'login user',
+        description: 'login user',
+        requestBody: {
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/login',
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: 'user logged in',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  $ref: '#/properties/user',
+                },
+              },
+            },
+          },
+          400: {
+            description: 'password or username incorrect',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    statusCode: {
+                      type: 'number',
+                      example: 400,
+                    },
+                    msg: {
+                      type: 'string',
+                      example: 'Incorrect email and/or password.',
+                    },
+                  }
+                },
+              },
+            },
+          },
+        },
+      },
     }
   },
 };
