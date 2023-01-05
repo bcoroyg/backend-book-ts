@@ -25,7 +25,7 @@ router.post(
     try {
       const { body: book } = req;
       const createdBook = await _bookService.createBook(book);
-      res.status(200).json({
+      res.status(201).json({
         data: createdBook,
         message: 'books created!',
       });

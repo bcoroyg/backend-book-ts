@@ -8,7 +8,7 @@
     "start": "yarn build && NODE_ENV=production node dist/index.js",
     "start:dev": "nodemon",
     "prepare": "husky install",
-    "test": "NODE_ENV=test jest --coverage --silent --runInBand"
+    "test": "NODE_ENV=test jest --coverage --silent --runInBand --detectOpenHandles"
   },
   "dependencies": {
     "cors": "^2.8.5",
