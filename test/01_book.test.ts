@@ -7,6 +7,7 @@ import { Book, User } from '../src/database/models';
 import { testDataBook } from './helper';
 
 let JWT_TOKEN = '';
+const filePath = `${__dirname}/dump/image.png`;
 
 const data = {
   username: config.defaultAdminUsername,
@@ -38,7 +39,10 @@ test('[BOOK] should to create a book', async () => {
   const res = await request(app)
     .post('/api/v1/books')
     .set('Authorization', `Bearer ${JWT_TOKEN}`)
-    .send(testDataBook);
+    .set('Content-Type', 'multipart/form-data')
+    .field('title', testDataBook.title)
+    .field('description', testDataBook.description)
+    .attach('file', filePath);
   const { body } = res;
   expect(res.statusCode).toEqual(201);
   expect(body).toHaveProperty('data');
@@ -77,7 +81,10 @@ test('[BOOK] should to update a book', async () => {
   const res = await request(app)
     .put(`/api/v1/books/${id}`)
     .set('Authorization', `Bearer ${JWT_TOKEN}`)
-    .send(testDataBook);
+    .set('Content-Type', 'multipart/form-data')
+    .field('title', testDataBook.title)
+    .field('description', testDataBook.description)
+    .attach('file', filePath);
   const { body } = res;
   expect(res.statusCode).toEqual(200);
   expect(body).toHaveProperty('data');
