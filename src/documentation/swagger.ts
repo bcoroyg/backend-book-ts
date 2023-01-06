@@ -24,16 +24,29 @@ const swaggerDefinition: OAS3Definition = {
     schemas: {
       book: {
         type: 'object',
-        required: ['title', 'description', 'image'],
+        required: ['title', 'description', 'file'],
         properties: {
           title: { type: 'string' },
           description: { type: 'string' },
-          image: { type: 'string' },
+          file: { type: 'string', format: 'binary' },
         },
         example: {
           title: 'Book Title',
           description: 'Book Description',
-          image: 'http://localhost:4000/images/book.jpg',
+          file: 'select file',
+        },
+      },
+      updateBook: {
+        type: 'object',
+        properties: {
+          title: { type: 'string' },
+          description: { type: 'string' },
+          file: { type: 'string', format: 'binary' },
+        },
+        example: {
+          title: 'Book Title',
+          description: 'Book Description',
+          file: 'select file',
         },
       },
       login: {
@@ -149,7 +162,7 @@ const swaggerDefinition: OAS3Definition = {
         },
         requestBody: {
           content: {
-            'application/json': {
+            'multipart/form-data': {
               schema: {
                 $ref: '#/components/schemas/book',
               },
@@ -228,9 +241,10 @@ const swaggerDefinition: OAS3Definition = {
         ],
         requestBody: {
           content: {
-            'application/json': {
+            'multipart/form-data': {
               schema: {
-                $ref: '#/components/schemas/book',
+                $ref: '#/components/schemas/updateBook',
+
               },
             },
           },
