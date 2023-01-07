@@ -1,4 +1,3 @@
-import config from '../config';
 import { Book } from '../database/models';
 
 export class SearchService {
@@ -15,13 +14,13 @@ export class SearchService {
 
   //buscar Libro
   async getSearch(title: string) {
-    let searchs = await Book.find({
+    const search = await Book.find({
       title: { $regex: new RegExp(title, 'i') },
     });
-    searchs = searchs.map((search) => {
-      search.image = `${config.publicUrl}/images/${search.image}`;
-      return search;
-    });
-    return searchs;
+    // searchs = searchs.map((search) => {
+    //   search.image = `${config.publicUrl}/images/${search.image}`;
+    //   return search;
+    // });
+    return search;
   }
 }

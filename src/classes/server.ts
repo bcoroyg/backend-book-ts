@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import SwaggerUI from 'swagger-ui-express';
 import Debug from 'debug';
 import fileUpload from 'express-fileupload';
+import cors from 'cors';
 import config from '../config';
 import { openApiConfiguration } from '../documentation';
 import { dbConnection } from '../lib';
@@ -60,6 +61,22 @@ export class Server {
         useTempFiles: true,
         tempFileDir: '/tmp/',
         createParentPath: true,
+      })
+    );
+    //cors
+    this.app.use(
+      cors({
+        origin: (origin, cb) => {
+          const whitelist = [config.urlFrontend];
+          //revisar si la peticion viene de un servidor que esta en whitelist
+          const exists = whitelist.some((domain) => domain === origin);
+
+          if (exists) {
+            cb(null, true);
+          } else {
+            cb(new Error('Not allowed by CORS!.'));
+          }
+        },
       })
     );
   }

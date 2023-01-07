@@ -18,7 +18,8 @@ const config = {
   jwtTimeExpire: process.env.JWT_TIME_EXPIRE,
   cloudApiSecret: process.env.CLOUD_API_SECRET,
   cloudApiKey: process.env.CLOUD_API_KEY,
-  cloudName: process.env.CLOUD_NAME
+  cloudName: process.env.CLOUD_NAME,
+  urlFrontend: process.env.URL_FRONTEND,
 };
 
 export default config;
