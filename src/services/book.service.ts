@@ -1,8 +1,7 @@
 import { UploadedFile } from 'express-fileupload';
 import createHttpError from 'http-errors';
-import config from '../config';
 import { Book } from '../database/models';
-import { deleteFile, deleteImageCloudinary, uploadHandler, uploadImageCloudinary } from '../utils';
+import {deleteImageCloudinary, uploadImageCloudinary } from '../utils';
 
 export class BookService {
   private static _bookServiceInstance: BookService;
