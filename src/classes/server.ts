@@ -31,7 +31,7 @@ export class Server {
 
     //listen
     //Desactivar listen en test
-    !config.test ? this.listen() : null;
+    //!config.test ? this.listen() : null;
   }
 
   async dbConnect() {
